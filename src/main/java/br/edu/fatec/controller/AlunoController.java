@@ -7,7 +7,25 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import br.edu.fatec.model.Aluno;
 import br.edu.fatec.model.service.AlunoService;
-import br.edu.fatec.views.UsuarioView;
+import br.edu.fatec.views.Views;
+/*
+json-generator.com/
+[
+  '{{repeat(10)}}',
+  {
+    nome: '{{city()}}',
+    professor: '{{surname()}}',
+    duracao: '{{integer(3, 14)}} meses',
+    alunos: [
+      '{{repeat(10)}}',
+      {
+        nome: '{{firstName()}}',
+        idade: '{{integer(23, 39)}}'
+      }
+    ]
+  }
+]
+*/
 
 @RestController
 @RequestMapping(value = "/aluno")
@@ -16,14 +34,8 @@ public class AlunoController {
     @Autowired
     private AlunoService alunoService;
 
-    @RequestMapping(value = "/get/{nome}")
-    @JsonView(UsuarioView.UsuarioCompleto.class)
-    public ResponseEntity<Collection<Aluno>> pesquisar(@PathVariable("nome") String nome) {
-        return new ResponseEntity<Collection<Aluno>>(alunoService.buscarPorNome(nome), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/getById")
-    @JsonView(UsuarioView.UsuarioCompleto.class)
+    @JsonView(Views.AlunoCompleto.class)
     public ResponseEntity<Aluno> get(@RequestParam(value = "id") Long id) {
         Aluno aluno = alunoService.getAluno(id);
         if (aluno == null) {
@@ -31,17 +43,32 @@ public class AlunoController {
         }
         return new ResponseEntity<Aluno>(aluno, HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/getTodos")
-    @JsonView(UsuarioView.UsuarioCompleto.class)
-    public ResponseEntity<List<Aluno>> getTodos() {
-        List<Aluno> alunos = alunoService.getAlunos();
+    
+    @RequestMapping(value = "/getByNome/{nome}")
+    @JsonView(Views.AlunoPesquisa.class)
+    public ResponseEntity<List<Aluno>> getByNome(@PathVariable("nome") String nome) {
+        List<Aluno> alunos = alunoService.buscarPorNome(nome);
+        if (alunos == null || alunos.isEmpty()) {
+            return new ResponseEntity<List<Aluno>>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<List<Aluno>>(alunos, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getTodos")
+    @JsonView(Views.Aluno.class)
+    public ResponseEntity<List<Aluno>> getTodos() {
+        List<Aluno> alunos = alunoService.getAlunos();
+        if (alunos == null || alunos.isEmpty()) {
+            return new ResponseEntity<List<Aluno>>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Aluno>>(alunos, HttpStatus.OK);
+    }
+
+
+
     @ResponseBody
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
-    @JsonView(UsuarioView.UsuarioCompleto.class)
+    @JsonView(Views.AlunoCompleto.class)
     public ResponseEntity<List<Aluno>> salvar(@RequestBody Aluno aluno) {
         alunoService.salvar(aluno);
         Long retorno = aluno.id;
@@ -56,9 +83,15 @@ public class AlunoController {
 
     @ResponseBody
     @RequestMapping(value = "/salvarVarios", method = RequestMethod.POST)
-    @JsonView(UsuarioView.UsuarioCompleto.class)
+    @JsonView(Views.AlunoCompleto.class)
     public ResponseEntity<List<Aluno>> salvarVarios(@RequestBody List<Aluno> alunos) {
-        alunos.stream().forEach(alunoService::salvar);
-        return new ResponseEntity<>(HttpStatus.OK);
+        boolean sucesso = true;
+        for (Aluno aluno : alunos){
+            alunoService.salvar(aluno);
+            if (aluno.id == null) sucesso = false;
+        }
+        if (sucesso)
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

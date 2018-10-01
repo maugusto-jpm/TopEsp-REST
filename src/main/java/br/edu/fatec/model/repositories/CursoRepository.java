@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import br.edu.fatec.model.Curso;
 
 public interface CursoRepository extends CrudRepository<Curso, Long> {
-    public List<Curso> findByNome(String nome);
+    public List<Curso> findByNomeContainingIgnoreCase(String nome);
 }

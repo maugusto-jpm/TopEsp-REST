@@ -5,9 +5,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
 import com.fasterxml.jackson.annotation.JsonView;
-import br.edu.fatec.views.UsuarioView;
+import br.edu.fatec.views.Views;
 
 @Entity
 @XmlRootElement(name = "Aluno")
@@ -15,17 +14,18 @@ import br.edu.fatec.views.UsuarioView;
 public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
+    @JsonView({ Views.AlunoPesquisa.class })
     public Long id;
 
-    @JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
+    @JsonView({ Views.Aluno.class })
     public String nome;
 
-    @JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
+    @JsonView({ Views.Aluno.class })
     public int idade;
 
     @ManyToOne
+    @JoinColumn(name = "fk_curso", nullable = false)
     @XmlTransient
-    @JsonView({ UsuarioView.UsuarioCompleto.class })
+    @JsonView({ Views.AlunoCompleto.class })
     public Curso curso;
 }

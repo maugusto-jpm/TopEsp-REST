@@ -28,21 +28,28 @@ public class CursoServiceImp implements CursoService {
     @Override
     @Transactional
     public Curso getCurso(Long id) {
-        return cursoRepository.findById(id).get();
+        Optional<Curso> curso = cursoRepository.findById(id);
+        if (curso.isPresent())
+            return curso.get();
+        return null;
     }
 
     @Override
     @Transactional
     public void salvar(Curso curso) {
-        if (curso.alunos != null && !curso.alunos.isEmpty()){
-            curso.alunos.stream().forEach(alunoRepository::save);
-        }
         cursoRepository.save(curso);
+        if (curso.alunos != null && !curso.alunos.isEmpty()){
+            for (Aluno aluno : curso.alunos){
+                aluno.curso = curso;
+                alunoRepository.save(aluno);
+            }
+            //curso.alunos.stream().forEach(alunoRepository::save);
+        }
 	}
 
     @Override
     @Transactional
     public List<Curso> buscarPorNome(String nome) {
-        return cursoRepository.findByNome(nome);
+        return cursoRepository.findByNomeContainingIgnoreCase(nome);
     }
 }

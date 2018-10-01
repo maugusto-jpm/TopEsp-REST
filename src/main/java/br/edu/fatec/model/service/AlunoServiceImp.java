@@ -1,6 +1,7 @@
 package br.edu.fatec.model.service;
 
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,10 @@ public class AlunoServiceImp implements AlunoService {
     @Override
     @Transactional
     public Aluno getAluno(Long id) {
-        return alunoRepository.findById(id).get();
+        Optional<Aluno> aluno = alunoRepository.findById(id);
+        if (aluno.isPresent())
+            return aluno.get();
+        return null;
     }
 
     @Override
@@ -42,6 +46,6 @@ public class AlunoServiceImp implements AlunoService {
     @Override
     @Transactional
     public List<Aluno> buscarPorNome(String nome) {
-        return alunoRepository.findByNome(nome);
+        return alunoRepository.findByNomeContainingIgnoreCase(nome);
     }
 }
