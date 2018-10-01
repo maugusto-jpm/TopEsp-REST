@@ -32,9 +32,9 @@ public class AlunoController {
         return new ResponseEntity<Aluno>(aluno, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getAll")
+    @RequestMapping(value = "/getTodos")
     @JsonView(UsuarioView.UsuarioCompleto.class)
-    public ResponseEntity<List<Aluno>> getAll() {
+    public ResponseEntity<List<Aluno>> getTodos() {
         List<Aluno> alunos = alunoService.getAlunos();
         return new ResponseEntity<List<Aluno>>(alunos, HttpStatus.OK);
     }
@@ -42,8 +42,7 @@ public class AlunoController {
     @ResponseBody
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
     @JsonView(UsuarioView.UsuarioCompleto.class)
-    public ResponseEntity<List<Aluno>> salvarAluno(@RequestBody Aluno aluno) {
-        System.out.println(aluno);
+    public ResponseEntity<List<Aluno>> salvar(@RequestBody Aluno aluno) {
         alunoService.salvar(aluno);
         Long retorno = aluno.id;
         System.out.println("Aluno salvo com id: " + retorno);
@@ -53,5 +52,13 @@ public class AlunoController {
         }
         System.out.println("Aluno não salvo: " + retorno);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/salvarVarios", method = RequestMethod.POST)
+    @JsonView(UsuarioView.UsuarioCompleto.class)
+    public ResponseEntity<List<Aluno>> salvarVarios(@RequestBody List<Aluno> alunos) {
+        alunos.stream().forEach(alunoService::salvar);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

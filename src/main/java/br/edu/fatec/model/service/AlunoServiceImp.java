@@ -5,7 +5,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.edu.fatec.model.Aluno;
-import br.edu.fatec.model.repositories.*;
+import br.edu.fatec.model.repositories.AlunoRepository;
+import br.edu.fatec.model.repositories.CursoRepository;;
 
 @Service("alunoService")
 public class AlunoServiceImp implements AlunoService {

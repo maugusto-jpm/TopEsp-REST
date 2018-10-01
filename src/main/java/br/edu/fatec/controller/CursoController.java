@@ -32,9 +32,9 @@ public class CursoController {
         return new ResponseEntity<Curso>(curso, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getAll")
+    @RequestMapping(value = "/getTodos")
     @JsonView(UsuarioView.CursoCompleto.class)
-    public ResponseEntity<List<Curso>> getAll() {
+    public ResponseEntity<List<Curso>> getTodos() {
         List<Curso> cursos = cursoService.getCursos();
         return new ResponseEntity<List<Curso>>(cursos, HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class CursoController {
     @ResponseBody
     @RequestMapping(value = "/salvar", method = RequestMethod.POST)
     @JsonView(UsuarioView.CursoCompleto.class)
-    public ResponseEntity<List<Curso>> salvarAluno(@RequestBody Curso curso) {
+    public ResponseEntity<List<Curso>> salvar(@RequestBody Curso curso) {
         System.out.println(curso);
         cursoService.salvar(curso);
         Long retorno = curso.id;
@@ -53,5 +53,13 @@ public class CursoController {
         }
         System.out.println("Curso não salvo: " + retorno);
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/salvarVarios", method = RequestMethod.POST)
+    @JsonView(UsuarioView.CursoCompleto.class)
+    public ResponseEntity<List<Curso>> salvarVarios(@RequestBody List<Curso> cursos) {
+        cursos.stream().forEach(cursoService::salvar);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

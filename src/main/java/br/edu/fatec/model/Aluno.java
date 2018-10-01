@@ -15,7 +15,7 @@ import br.edu.fatec.views.UsuarioView;
 public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
+    //@JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
     public Long id;
 
     @JsonView({ UsuarioView.UsuarioCompleto.class, UsuarioView.CursoCompleto.class })
