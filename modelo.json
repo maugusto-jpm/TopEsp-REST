@@ -1,0 +1,137 @@
+[
+    {
+      "nome": "Grenada",
+      "professor": "Dickerson",
+      "duracao": "32 meses",
+      "alunos": [
+        {
+          "nome": "Atkins",
+          "idade": 31
+        },
+        {
+          "nome": "Berta",
+          "idade": 33
+        },
+        {
+          "nome": "Angelica",
+          "idade": 35
+        },
+        {
+          "nome": "Velez",
+          "idade": 21
+        },
+        {
+          "nome": "Sherry",
+          "idade": 26
+        }
+      ]
+    },
+    {
+      "nome": "Guyana",
+      "professor": "Grimes",
+      "duracao": "9 meses",
+      "alunos": [
+        {
+          "nome": "Holloway",
+          "idade": 27
+        },
+        {
+          "nome": "Benita",
+          "idade": 31
+        },
+        {
+          "nome": "Mara",
+          "idade": 34
+        },
+        {
+          "nome": "Valentine",
+          "idade": 28
+        }
+      ]
+    },
+    {
+      "nome": "Rwanda",
+      "professor": "Hodges",
+      "duracao": "8 meses",
+      "alunos": [
+        {
+          "nome": "Dorothy",
+          "idade": 38
+        },
+        {
+          "nome": "Glenna",
+          "idade": 32
+        },
+        {
+          "nome": "Middleton",
+          "idade": 21
+        },
+        {
+          "nome": "Deena",
+          "idade": 38
+        },
+        {
+          "nome": "Melanie",
+          "idade": 28
+        },
+        {
+          "nome": "Holman",
+          "idade": 38
+        }
+      ]
+    },
+    {
+      "nome": "Nigeria",
+      "professor": "Ballard",
+      "duracao": "17 meses",
+      "alunos": [
+        {
+          "nome": "Woodard",
+          "idade": 25
+        },
+        {
+          "nome": "Long",
+          "idade": 29
+        },
+        {
+          "nome": "Dyer",
+          "idade": 28
+        },
+        {
+          "nome": "Carpenter",
+          "idade": 20
+        },
+        {
+          "nome": "Spencer",
+          "idade": 28
+        },
+        {
+          "nome": "Fox",
+          "idade": 30
+        },
+        {
+          "nome": "Burton",
+          "idade": 34
+        },
+        {
+          "nome": "Florence",
+          "idade": 23
+        }
+      ]
+    },
+    {
+      "nome": "Cook Islands",
+      "professor": "Kennedy",
+      "duracao": "13 meses",
+      "alunos": [
+        {
+          "nome": "Weiss",
+          "idade": 26
+        },
+        {
+          "nome": "Marshall",
+          "idade": 23
+        }
+      ]
+    }
+  ]
